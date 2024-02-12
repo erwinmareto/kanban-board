@@ -81,14 +81,14 @@ async function main() {
     },
   });
 
-  const member1 = prisma.teamMembers.create({
+  const member1 = await prisma.teamMembers.create({
     data: {
       userId: 1,
       teamId: 1,
     },
   });
 
-  const member2 = prisma.teamMembers.create({
+  const member2 = await prisma.teamMembers.create({
     data: {
       userId: 2,
       teamId: 2,
