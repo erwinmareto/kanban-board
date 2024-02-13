@@ -6,7 +6,7 @@ const Cards = async ({ params }) => {
   const { data } = await getCardsWithTasksByTeamName(team);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-5">
-      <CardPage cards={data} teamId={data[0].teamId} />
+      <CardPage cards={data} teamId={data[0]?.teamId} />
     </main>
   );
 };

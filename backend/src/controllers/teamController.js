@@ -47,6 +47,18 @@ class TeamController {
     }
   }
 
+  static getByTeamName = async (req, res, next) => {
+    try {
+      const { teamName } = req.params;
+      const team = await TeamService.getByteamName(teamName);
+      return res
+        .status(200)
+        .json({ message: "Successfully retrieved team data", data: team });
+    } catch (error) {
+      next(error)
+    }
+  }
+
   static getEverythingById = async (req, res, next) => {
     try {
       const { id } = req.params;

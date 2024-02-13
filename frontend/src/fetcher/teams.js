@@ -2,7 +2,7 @@ const getTeamsByUserId = async (userId) => {
     try {
         const teams = await fetch(`http://localhost:8000/teams/user/${userId}`, {
             method: "GET",
-            next: { revalidate: 1 },
+            next: { revalidate: 'no-cache' },
           });
         return await teams.json();
     } catch (error) {

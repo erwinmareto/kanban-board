@@ -24,7 +24,16 @@ class TeamService {
       },
     });
     return team;
-  }
+  };
+
+  static getByteamName = async (teamName) => {
+    const team = await prisma.team.findFirst({
+      where: {
+        name: teamName,
+      },
+    });
+    return team;
+  };
 
   static getEverything = async () => {
     const teams = await prisma.team.findMany({
@@ -69,7 +78,7 @@ class TeamService {
       },
     });
     return teams;
-  }
+  };
 
   static add = async ({ userId, name }) => {
     const team = await prisma.team.create({

@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import { addTeam } from "@/fetcher/teams";
 import { useForm } from "react-hook-form";
 import { getCookie } from "cookies-next";
-const TeamForm = () => {
+import { useRouter } from "next/navigation";
+const TeamForm = ({ close }) => {
+  const router = useRouter();
   const userId = getCookie("id");
   const {
     register,
@@ -13,16 +15,15 @@ const TeamForm = () => {
     try {
       const payload = { ...data, userId };
       const teamData = await addTeam(payload);
+      router.refresh();
+      close();
       window.alert(teamData.message);
     } catch (error) {
       window.alert(error);
     }
   };
   return (
-    <form
-      className="flex flex-col gap-2 p-8"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="flex flex-col gap-2 p-8" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="name" className="text-white">
         Team Name:
       </label>
