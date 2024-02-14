@@ -4,7 +4,7 @@ const getCardsWithTasksByTeamId = async (teamId) => {
       `http://localhost:8000/cards/all/tasks/id/${teamId}`,
       {
         method: "GET",
-        next: { revalidate: 10 },
+        cache: 'no-store',
       }
     );
     return await allCards.json();
@@ -19,7 +19,7 @@ const getCardsWithTasksByTeamName = async (teamName) => {
       `http://localhost:8000/cards/all/tasks/name/${teamName}`,
       {
         method: "GET",
-        next: { revalidate: 10 },
+        cache: 'no-store',
       }
     );
     return await allCards.json();

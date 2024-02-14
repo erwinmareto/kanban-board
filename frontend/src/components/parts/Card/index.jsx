@@ -8,21 +8,21 @@ import { deleteCard } from "@/fetcher/cards";
 import { useRouter } from "next/navigation";
 
 const Card = ({ cardId, title, task, teamId }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [card, setCard] = useState(false);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-  const openEdit = () => setIsEdit(true);
-  const closeEdit = () => setIsEdit(false);
+  const openCard = () => setCard(true);
+  const closeCard = () => setCard(false);
 
   const handleDelete = async () => {
     const card = await deleteCard(cardId);
     window.alert(card.message);
-    router.refresh()
-  }
+    router.refresh();
+  };
   return (
     <>
       <article className="z-10 flex flex-col gap-5 bg-white bg-opacity-50 rounded-xl p-5 backdrop-filter backdrop-blur-lg">
@@ -84,11 +84,14 @@ const Card = ({ cardId, title, task, teamId }) => {
           <div className="flex justify-around gap-2">
             <button
               className="w-1/4 bg-blue-500 bg-opacity-50 p-2 rounded-lg hover:bg-opacity-80"
-              onClick={openEdit}
+              onClick={openCard}
             >
               Edit
             </button>
-            <button className="w-1/4 bg-red-500 bg-opacity-50 p-2 rounded-lg hover:bg-opacity-80" onClick={handleDelete}>
+            <button
+              className="w-1/4 bg-red-500 bg-opacity-50 p-2 rounded-lg hover:bg-opacity-80"
+              onClick={handleDelete}
+            >
               Delete
             </button>
           </div>
@@ -97,17 +100,24 @@ const Card = ({ cardId, title, task, teamId }) => {
       {isOpen && (
         <CustomModal
           change={closeModal}
-          type={"create"}
-          element={"task"}
-          children={<TaskForm cardId={cardId} />}
+          type="create"
+          element="task"
+          children={<TaskForm cardId={cardId} close={closeModal} />}
         />
       )}
-      {isEdit && (
+      {card && (
         <CustomModal
-          change={closeEdit}
+          change={closeCard}
           type="edit"
-          element={"card"}
-          children={<CardForm cardId={cardId} teamId={teamId} title={title} />}
+          element="card"
+          children={
+            <CardForm
+              cardId={cardId}
+              teamId={teamId}
+              title={title}
+              close={closeCard}
+            />
+          }
         />
       )}
     </>

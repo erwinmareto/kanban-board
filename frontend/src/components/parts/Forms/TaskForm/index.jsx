@@ -2,8 +2,10 @@
 import { useForm } from "react-hook-form";
 import { getCookie } from "cookies-next";
 import { addTask, editTask } from "@/fetcher/task";
+import { useRouter } from "next/navigation";
 
-const TaskForm = ({ cardId, taskId, title, category, deadline }) => {
+const TaskForm = ({ cardId, taskId, title, category, deadline, close }) => {
+  const router = useRouter();
   const userId = getCookie("id");
   const {
     register,
@@ -21,10 +23,15 @@ const TaskForm = ({ cardId, taskId, title, category, deadline }) => {
       const payload = { ...data, cardId, userId };
       if (title) {
         const taskData = await editTask(taskId, payload);
+        close();
+        router.refresh();
         window.alert(taskData.message);
         return;
       }
       const taskData = await addTask(payload);
+      close();
+      // console.log(typeof close)
+      router.refresh();
       window.alert(taskData.message);
       return;
     } catch (error) {

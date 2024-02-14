@@ -15,8 +15,8 @@ const TeamForm = ({ close }) => {
     try {
       const payload = { ...data, userId };
       const teamData = await addTeam(payload);
-      router.refresh();
       close();
+      router.refresh();
       window.alert(teamData.message);
     } catch (error) {
       window.alert(error);

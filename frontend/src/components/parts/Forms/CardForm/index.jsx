@@ -1,7 +1,10 @@
+"use client";
 import { addCard, editCard } from "@/fetcher/cards";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-const CardForm = ({ cardId, teamId, title }) => {
+const CardForm = ({ cardId, teamId, title, close }) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -16,10 +19,14 @@ const CardForm = ({ cardId, teamId, title }) => {
       const payload = { teamId, ...data };
       if (title) {
         const cardData = await editCard(cardId, payload);
+        close();
+        router.refresh();
         window.alert(cardData.message);
         return;
       }
       const cardData = await addCard(payload);
+      close();
+      router.refresh();
       window.alert(cardData.message);
       return;
     } catch (error) {
