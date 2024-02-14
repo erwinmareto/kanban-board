@@ -35,14 +35,24 @@ class MemberService {
     return teams;
   };
 
-  static add = async (teamId, userId) => {
-    const newMember = await prisma.teamMembers.create({
-      data: {
-        teamId: +teamId,
-        userId: +userId,
-      },
-    });
-    return newMember;
+  static add = async ({ users }) => {
+    const allMembers = await Promise.all(
+      users.map(async (user) => {
+        return await prisma.teamMembers.create({
+          data: {
+            teamId: +user.teamId,
+            userId: +user.userId,
+          },
+        });
+      })
+    );
+    // const newMember = await prisma.teamMembers.create({
+    //   data: {
+    //     teamId: +teamId,
+    //     userId: +userId,
+    //   },
+    // });
+    return allMembers;
   };
 
   static update = async (id, teamId, userId) => {

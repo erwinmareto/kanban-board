@@ -54,8 +54,7 @@ class MemberController {
 
   static addMember = async (req, res, next) => {
     try {
-      const { teamId, userId } = req.body;
-      const member = await MemberService.add(teamId, userId);
+      const member = await MemberService.add(req.body);
       return res
         .status(201)
         .json({ message: "Successfully created team data", data: member });
