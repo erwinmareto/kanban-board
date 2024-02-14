@@ -2,7 +2,7 @@ const CustomModal = ({ change, type, element, children }) => {
   return (
     <article>
       <div
-        className="fixed z-50 inset-0 p-2"
+        className="fixed z-50 inset-0 p-2 overflow-auto"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
@@ -13,7 +13,7 @@ const CustomModal = ({ change, type, element, children }) => {
             aria-hidden="true"
           ></div>
 
-          <div className=" inline-block align-bottom bg-white bg-opacity-20 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div className=" inline-block align-bottom bg-opacity-20 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="flex justify-between">
                 <h1
