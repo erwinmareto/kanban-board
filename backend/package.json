@@ -8,7 +8,8 @@
     "prisma": "^5.7.1"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
     "start:docker": "npx prisma migrate dev && npx prisma db seed && node ./src/index.js"
   },
   "keywords": [],
