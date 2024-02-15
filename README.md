@@ -1,4 +1,4 @@
-# Mini Quiz App
+# Kanban Board App
 
 ## Technologies Used
 
