@@ -32,9 +32,15 @@ const CardPage = ({ cards, teamId, teamName }) => {
   }, []);
   return (
     <>
-      <h1 className="text-3xl py-3 text-white" onClick={openModal}>
-        {teamName}
-      </h1>
+      <div className="flex items-center gap-2">
+        <h1 className="text-3xl py-3 text-white">{teamName}</h1>
+        <button
+          className="bg-white text-white bg-opacity-30 p-2 rounded-lg -translate-x-16 transition-all opacity-0 delay-50 duration-200 hover:bg-opacity-50 hover:translate-x-0 hover:opacity-100"
+          onClick={openModal}
+        >
+          Members
+        </button>
+      </div>
       <section className="z-10 grid grid-cols-4 gap-5 w-full items-start text-sm">
         {columns.map((column, i) => {
           return (
