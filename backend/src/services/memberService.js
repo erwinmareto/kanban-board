@@ -22,6 +22,13 @@ class MemberService {
       where: {
         teamId: +teamId,
       },
+      include: {
+        user: {
+          select: {
+            username: true
+          }
+        }
+      }
     });
     return members;
   };
