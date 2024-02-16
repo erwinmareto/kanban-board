@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { MultiSelect } from "react-multi-select-component";
+import Swal from "sweetalert2";
 import { addMembers, deleteMember } from "@/fetcher/members";
 import { getAllUsers } from "@/fetcher/user";
-import { useRouter } from "next/navigation";
 
 const MemberCard = ({ members, teamId, close }) => {
   const router = useRouter();
@@ -30,9 +31,25 @@ const MemberCard = ({ members, teamId, close }) => {
       const memberData = await addMembers(memberPayload);
       close();
       router.refresh();
-      window.alert(memberData.message);
+      Swal.fire({
+        title: "Success!",
+        text: memberData.message,
+        icon: "success",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      })
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: "Error!",
+        text: error,
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      })
     }
   };
 
@@ -41,9 +58,25 @@ const MemberCard = ({ members, teamId, close }) => {
         const member = await deleteMember(id)
         close()
         router.refresh();
-        window.alert(member.message);
+        Swal.fire({
+          title: 'Success!',
+          text: member.message,
+          icon: 'success',
+          timer: 2000,
+          showCloseButton: false,
+          showConfirmButton: false,
+          timerProgressBar: true
+        })
       } catch (error) {
-        window.alert(error);
+        Swal.fire({
+          title: 'Error!',
+          text: error,
+          icon: 'error',
+          timer: 2000,
+          showCloseButton: false,
+          showConfirmButton: false,
+          timerProgressBar: true
+        })
       }
   }
 

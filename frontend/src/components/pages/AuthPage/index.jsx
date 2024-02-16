@@ -1,8 +1,9 @@
 "use client";
-import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { loginUser, registerUser } from "@/fetcher/auth";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { loginUser, registerUser } from "@/fetcher/auth";
 
 const AuthPage = ({ authType }) => {
   const router = useRouter();
@@ -13,15 +14,21 @@ const AuthPage = ({ authType }) => {
         authType === "register"
           ? await registerUser(data)
           : await loginUser(data);
-      window.alert(userData.message);
+
       if (authType === "register") {
         router.push("/auth/login");
-        // return;
       }
       router.push("/");
-      // return;
     } catch (error) {
-      window.alert("error");
+      Swal.fire({
+        title: "Error!",
+        text: error,
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
     }
   };
   return (

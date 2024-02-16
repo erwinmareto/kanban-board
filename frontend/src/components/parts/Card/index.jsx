@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import Task from "../Task";
-import CustomModal from "@/components/elements/Modal";
-import CardForm from "../Forms/CardForm";
-import TaskForm from "../Forms/TaskForm";
-import { deleteCard } from "@/fetcher/cards";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import Task from "@/components/parts/Task";
+import CustomModal from "@/components/elements/Modal";
+import CardForm from "@/components/parts/Forms/CardForm";
+import TaskForm from "@/components/parts/Forms/TaskForm";
+import { deleteCard } from "@/fetcher/cards";
 
 const Card = ({ cardId, title, task, teamId }) => {
   const router = useRouter();
@@ -19,9 +20,29 @@ const Card = ({ cardId, title, task, teamId }) => {
   const closeCard = () => setCard(false);
 
   const handleDelete = async () => {
-    const card = await deleteCard(cardId);
-    window.alert(card.message);
-    router.refresh();
+    try {
+      const card = await deleteCard(cardId);
+      Swal.fire({
+        title: "Success!",
+        text: card.message,
+        icon: "success",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+      router.refresh();
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error,
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+    }
   };
   return (
     <>

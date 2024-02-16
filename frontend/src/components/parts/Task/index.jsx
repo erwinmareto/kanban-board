@@ -1,8 +1,9 @@
 "use client";
-import CustomModal from "@/components/elements/Modal";
-import moment from "moment";
 import { useState } from "react";
-import TaskForm from "../Forms/TaskForm";
+import moment from "moment";
+import Swal from "sweetalert2";
+import CustomModal from "@/components/elements/Modal";
+import TaskForm from "@/components/parts/Forms/TaskForm";
 import TaskHeader from "@/components/elements/TaskCard/Header";
 import { deleteTask } from "@/fetcher/task";
 
@@ -13,8 +14,29 @@ const Task = ({ cardId, taskId, title, category, deadline }) => {
   const closeEdit = () => setIsEdit(false);
 
   const handleDelete = async () => {
-    const task = await deleteTask(taskId);
-    window.alert(task.message);
+    try {
+      const task = await deleteTask(taskId);
+      Swal.fire({
+        title: "Success!",
+        text: task.message,
+        icon: "success",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      })
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error,
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+    }
+    
   };
   return (
     <>

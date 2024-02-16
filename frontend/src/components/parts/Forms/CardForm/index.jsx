@@ -1,7 +1,8 @@
 "use client";
-import { addCard, editCard } from "@/fetcher/cards";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2'
+import { addCard, editCard } from "@/fetcher/cards";
 
 const CardForm = ({ cardId, teamId, title, close }) => {
   const router = useRouter();
@@ -21,16 +22,40 @@ const CardForm = ({ cardId, teamId, title, close }) => {
         const cardData = await editCard(cardId, payload);
         close();
         router.refresh();
-        window.alert(cardData.message);
+        Swal.fire({
+          title: 'Success!',
+          text: cardData.message,
+          icon: 'success',
+          timer: 2000,
+          showCloseButton: false,
+          showConfirmButton: false,
+          timerProgressBar: true
+        })
         return;
       }
       const cardData = await addCard(payload);
       close();
       router.refresh();
-      window.alert(cardData.message);
+      Swal.fire({
+        title: 'Success!',
+        text: error,
+        icon: 'success',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
       return;
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Error!',
+        text: error,
+        icon: 'error',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
     }
   };
   return (

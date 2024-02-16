@@ -1,8 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { getCookie } from "cookies-next";
+import Swal from 'sweetalert2'
 import { addTask, editTask } from "@/fetcher/task";
-import { useRouter } from "next/navigation";
 
 const TaskForm = ({ cardId, taskId, title, category, deadline, close }) => {
   const router = useRouter();
@@ -25,17 +26,40 @@ const TaskForm = ({ cardId, taskId, title, category, deadline, close }) => {
         const taskData = await editTask(taskId, payload);
         close();
         router.refresh();
-        window.alert(taskData.message);
+        Swal.fire({
+          title: 'Success!',
+          text: taskData.message,
+          icon: 'success',
+          timer: 2000,
+          showCloseButton: false,
+          showConfirmButton: false,
+          timerProgressBar: true
+        })
         return;
       }
       const taskData = await addTask(payload);
       close();
-      // console.log(typeof close)
       router.refresh();
-      window.alert(taskData.message);
+      Swal.fire({
+        title: 'Success!',
+        text: taskData.message,
+        icon: 'success',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
       return;
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Error!',
+        text: error,
+        icon: 'error',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
     }
   };
   return (

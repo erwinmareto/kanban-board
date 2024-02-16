@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { MultiSelect } from "react-multi-select-component";
 import { getCookie } from "cookies-next";
+import Swal from 'sweetalert2'
 import { addTeam } from "@/fetcher/teams";
 import { getAllUsers } from "@/fetcher/user";
 import { addMembers } from "@/fetcher/members";
@@ -39,9 +40,25 @@ const TeamForm = ({ close }) => {
       }
       close();
       router.refresh();
-      window.alert(teamData.message);
+      Swal.fire({
+        title: 'Success!',
+        text: teamData.message,
+        icon: 'success',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Error!',
+        text: error,
+        icon: 'error',
+        timer: 2000,
+        showCloseButton: false,
+        showConfirmButton: false,
+        timerProgressBar: true
+      })
     }
   };
 
