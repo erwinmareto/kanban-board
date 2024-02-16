@@ -45,13 +45,13 @@ const TeamForm = ({ close }) => {
     }
   };
 
-  const fetchUsers = async () => {
+  const fetchMembers = async () => {
     const users = await getAllUsers();
     setUsers(users.data);
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchMembers();
   }, []);
   return (
     <form

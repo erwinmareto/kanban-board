@@ -16,8 +16,14 @@ const CardPage = ({ cards, teamId, teamName }) => {
     columns[i % 4].push(card);
   });
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const openModal = () => {
+    setIsOpen(true);
+    console.log("opennnnnn");
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+    console.log("closeeeeee");
+  };
   const fetchUsers = async () => {
     try {
       const users = await getMembersByTeamId(teamId);
@@ -57,7 +63,7 @@ const CardPage = ({ cards, teamId, teamName }) => {
             change={closeModal}
             type="list"
             element="teams"
-            children={<MemberCard members={users} />}
+            children={<MemberCard members={users} teamId={teamId} close={closeModal} />}
           />
         )}
       </section>
