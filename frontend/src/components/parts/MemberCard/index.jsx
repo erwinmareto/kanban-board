@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import { addMembers } from "@/fetcher/members";
+import { addMembers, deleteMember } from "@/fetcher/members";
 import { getAllUsers } from "@/fetcher/user";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +16,7 @@ const MemberCard = ({ members, teamId, close }) => {
     value: user.id,
   }));
 
-  const onSubmit = async (e) => {
+  const submitMembers = async (e) => {
     try {
       e.preventDefault();
       const memberPayload = {
@@ -36,6 +36,17 @@ const MemberCard = ({ members, teamId, close }) => {
     }
   };
 
+  const removeMember = async (id) => {
+      try {
+        const member = await deleteMember(id)
+        close()
+        router.refresh();
+        window.alert(member.message);
+      } catch (error) {
+        window.alert(error);
+      }
+  }
+
   const fetchUsers = async () => {
     const users = await getAllUsers();
     setUsers(users.data);
@@ -52,7 +63,7 @@ const MemberCard = ({ members, teamId, close }) => {
           className="flex justify-between items-center bg-white bg-opacity-20 rounded-lg p-2"
         >
           <p>{member?.user?.username}</p>
-          <button className="bg-red-500 bg-opacity-50 p-2 rounded-lg hover:bg-opacity-80">
+          <button className="bg-red-500 bg-opacity-50 p-2 rounded-lg hover:bg-opacity-80" onClick={() => removeMember(member.id)}>
             remove
           </button>
         </div>
@@ -66,7 +77,7 @@ const MemberCard = ({ members, teamId, close }) => {
       </button>
 
       {showAddMember && (
-        <form className="flex flex-col gap-2" onSubmit={onSubmit}>
+        <form className="flex flex-col gap-2" onSubmit={submitMembers}>
           <MultiSelect
             className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg"
             id="members"
