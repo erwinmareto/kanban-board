@@ -78,6 +78,7 @@ const TeamForm = ({ close }) => {
       )}
 
       <button
+      type="button"
         className="bg-white text-white bg-opacity-30 p-2 rounded-lg hover:bg-opacity-50"
         onClick={() => setShowAddMember(!showAddMember)}
       >

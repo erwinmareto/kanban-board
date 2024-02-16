@@ -16,6 +16,8 @@ const HomePage = ({ teams }) => {
     setTeam(event.target.value);
   };
 
+
+
   useEffect(() => {
     setTeam(teams[0]?.name);
   }, []);

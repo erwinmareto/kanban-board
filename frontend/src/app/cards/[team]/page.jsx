@@ -8,8 +8,7 @@ const Cards = async ({ params }) => {
   const { data: teamData } = await getTeamsByTeamName(team);
   return (
     <main className="flex min-h-screen flex-col p-5">
-      <h1 className="text-3xl py-3 text-white">{teamData?.name}</h1>
-      <CardPage cards={cards} teamId={teamData?.id} />
+      <CardPage cards={cards} teamId={teamData?.id} teamName={teamData?.name} />
     </main>
   );
 };
